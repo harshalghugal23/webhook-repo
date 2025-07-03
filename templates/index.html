@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Webhook Events</title>
+    <meta http-equiv="refresh" content="15">
+    <style>
+        body { font-family: Arial; background: #f4f4f4; padding: 20px; }
+        .event { background: #fff; margin: 10px 0; padding: 10px; border-left: 4px solid #007BFF; }
+    </style>
+</head>
+<body>
+    <h2>Recent GitHub Events</h2>
+    {% for event in events %}
+        <div class="event">
+            {% if event.event_type == 'push' %}
+                <p><b>{{ event.author }}</b> pushed to <b>{{ event.to_branch }}</b> on {{ event.timestamp.strftime('%d %b %Y - %I:%M %p UTC') }}</p>
+            {% elif event.event_type == 'pull_request' %}
+                <p><b>{{ event.author }}</b> submitted a pull request from <b>{{ event.from_branch }}</b> to <b>{{ event.to_branch }}</b> on {{ event.timestamp.strftime('%d %b %Y - %I:%M %p UTC') }}</p>
+            {% elif event.event_type == 'merge' %}
+                <p><b>{{ event.author }}</b> merged branch <b>{{ event.from_branch }}</b> to <b>{{ event.to_branch }}</b> on {{ event.timestamp.strftime('%d %b %Y - %I:%M %p UTC') }}</p>
+            {% endif %}
+        </div>
+    {% endfor %}
+</body>
+</html>
